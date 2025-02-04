@@ -1,36 +1,30 @@
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 class Solution {
 
     public int solution(String numbers) {
 
-        List<Integer> nums = numbers.chars()
-                .map(c -> c - '0')
-                .boxed()
-                .collect(Collectors.toList());
-
         Set<Integer> primes = new HashSet<>();
-        getPrimes(0, nums, primes);
+        int[] nums = numbers.chars().map(c -> c - '0').toArray();
+        getPrimes(0, nums, new boolean[nums.length], primes);
 
         return primes.size();
     }
 
-    private Set<Integer> getPrimes(int acc, List<Integer> numbers, Set<Integer> primes) {
+    private void getPrimes(int acc, int[] numbers, boolean[] isUsed, Set<Integer> primes) {
         if (isPrime(acc)) primes.add(acc);
-        if (numbers.isEmpty()) return primes;
 
-        for (int i = 0; i < numbers.size(); i++) {
-            int nextAcc = (acc * 10) + numbers.get(i);
-            List<Integer> nextNumbers = new ArrayList<>(numbers);
-            nextNumbers.remove(i);
-            primes.addAll(getPrimes(nextAcc, nextNumbers, primes));
+        for (int i = 0; i < numbers.length; i++) {
+
+            if (isUsed[i]) continue;
+
+            int nextAcc = acc * 10 + numbers[i];
+
+            isUsed[i] = true;
+            getPrimes(nextAcc, numbers, isUsed, primes);
+            isUsed[i] = false;
         }
-
-        return primes;
     }
 
     private boolean isPrime(int number) {
