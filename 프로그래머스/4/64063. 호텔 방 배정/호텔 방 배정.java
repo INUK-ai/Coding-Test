@@ -18,7 +18,7 @@ class Solution {
 
         public Node root() {
             if (parent == null) return this;
-            return parent.root();
+            return parent = parent.root();
         }
 
         public boolean isConnected(Node n) {
