@@ -53,7 +53,7 @@ public class Main {
             if (!visited[i]) {
                 visited[i] = true;
                 lotto[count] = nums[i];
-                backtrace(i, count + 1);
+                backtrace(i + 1, count + 1);
                 visited[i] = false;
             }
         }
