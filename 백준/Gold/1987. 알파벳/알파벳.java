@@ -11,7 +11,7 @@ public class Main {
 
     private static int R, C;
     private static char[][] board;
-    private static Set<Character> visited = new HashSet<>();
+    private static boolean[] visited = new boolean[26];
     private static int maxDepth = Integer.MIN_VALUE;
 
     private static int[] dx = {-1, 0, 1, 0};
@@ -31,6 +31,7 @@ public class Main {
             }
         }
 
+        visited[board[0][0] - 'A'] = true;
         backtrace(0, 0, 1);
 
         System.out.println(maxDepth);
@@ -39,18 +40,18 @@ public class Main {
     private static void backtrace(int y, int x, int depth) {
 
         maxDepth = Math.max(maxDepth, depth);
-        visited.add(board[y][x]);
 
         for (int i = 0; i < 4; i++) {
             int nx = x + dx[i];
             int ny = y + dy[i];
 
             if (nx < 0 || ny < 0 || nx >= C || ny >= R) continue;
-            if (visited.contains(board[ny][nx])) continue;
-
-            visited.add(board[ny][nx]);
+            int index = board[ny][nx] - 'A';
+            
+            if (visited[index]) continue;
+            visited[index] = true;
             backtrace(ny, nx, depth + 1);
-            visited.remove(board[ny][nx]);
+            visited[index] = false;
         }
     }
 }
