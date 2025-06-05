@@ -1,5 +1,5 @@
 -- 코드를 입력하세요
-WITH RECORD(MONTH, CAR_ID) AS (
+WITH RECORD AS (
     SELECT
         MONTH(START_DATE) AS MONTH,
         CAR_ID
